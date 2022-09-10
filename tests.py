@@ -1,14 +1,13 @@
-### Code to access directory
-import os
-# assign directory
-directory = 'Inbox'
- 
-# iterate over files in named directory
-print("Checking Inbox Folder")
-for filename in os.listdir(directory):
-    f = os.path.join(directory, filename)
-    # checking if it is a file
-    if "~" in f:
-        print("Warning: File is open")
-    elif os.path.isfile(f):
-        print(f)
+# creating an empty list
+lst = []
+
+# number of elements as input
+n = int(input("Enter number of elements : "))
+
+# iterating till the range
+for i in range(0, n):
+	ele = int(input())
+
+	lst.append(ele) # adding the element
+	
+print(lst)

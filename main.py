@@ -1,6 +1,8 @@
 import os
+import sys
+from tkinter import N
 from openpyxl import Workbook, load_workbook
-from openpyxl.utils import get_column_letter
+from openpyxl.utils import get_column_letter, column_index_from_string
 from openpyxl.styles import Font
 
 # Importing Spreadsheets
@@ -10,11 +12,8 @@ directory = 'Inbox'
 
 
 def main():
-    # iterate over files in named directory
-    print("Checking Inbox Folder...")
     import_num = 0
     for filename in os.listdir(directory):
-
         f = os.path.join(directory, filename)
         # checking if it is a file
         if "~" in f:
@@ -24,58 +23,98 @@ def main():
             print(f)
     print(f"You have imported: {import_num} files")
 
-    #inputs
-    input("Does this look correct?: (Y/N)")
+    def start():
+        txt = input("Does this look correct?: (Y/N)")
+        if txt == "Y" or "y":
+            return
+        else:
+            sys.exit()
+    # start()
 
-    # Setting to the first template sheet
     ws_template = wb_template.active
     ws_data = wb_data.active
-    print("Initializing the Sheet1")
 
-    # Copying sheet1 to import number
+    # Copying sheets to match import number
     for file_index in range(1, import_num + 1):
-        print("Copying Worksheet template")
         new_sheet = wb_template.copy_worksheet(ws_template)
         new_sheet.title = f"Sheet{file_index + 1}"
         print(f"Initializing {new_sheet.title}")
 
-    # Insert data to sheet1
-    print("Writing to sheet1...")
     row_count = len(tuple(ws_data.rows))
 
-    def copypaster(x):
-        # for cell in column X, print data, copy data, print again
-        for cell in range(2, row_count + 1):
-            data_cell = ws_data[x + str(cell)]
-            print(data_cell.value)
-            # +4 on the position of the new cell to get under the headers
-            new_cell = ws_template[x + str(cell + 4)]
-            new_cell.value = data_cell.value
-            print(new_cell.value)
-    # for each column in data sheet, run copypaster then switch column and run again
-    def colswitcher(num, str):
-        for column in range(0,2):
-            #increment character A, B, C... etc
+    # Asking user for the columns to use
+    col_list = [0]
+    def dialog(lst):
+        #Maybe change to list what each input is for / Cost / Id / ect
+        # print("Input the Letter of the Columns you want scraped")
+        # print("Please enter one at a time:")
+        # print("Enter a zero to leave it blank:")
+        # for x in range(0,6):
+        #     txt = input("-")
+        #     lst.append(txt)
+        #     print(txt)
+        # dummy info for the lift
+        lst = ["0", "A", "0", "O", "0", "P", "Q"]
+        print(f"Selected Columns:{lst}")
+        return (lst)
+    col_list = dialog(col_list)
+
+    def copypaster(x, y):
+        print("Copypaster function run")
+        if x == "0":
+            print("Leaving Field Blank")
+            
+        else:
+            # for cell in data sheet's column X, print data, copy data, print again
+            # y += 1
+            for cell in range(2, row_count + 1):
+                data_cell = ws_data[x + str(cell)]
+                print(data_cell.value)
+                # +4 on the position of the new cell to get under the headers
+                new_cell = ws_template[get_column_letter(y) + str(cell + 4)]
+                new_cell.value = data_cell.value
+                print(new_cell.value)
+
+    def old_colswitcher(num, str):
+        # for each column in data sheet, run copypaster then switch column and run again
+        for column in range(0, 5):
+            # increment character A, B, C... etc
             num += 1
             str = get_column_letter(num)
-            
-            if 1 == 1:
-                copypaster(str)
-            else:
-                colswitcher(str)
-   
-    # switch to next sheet2 and file
+
+            copypaster(str)
+
+    # Take in list and switch to each column as needed to read information
+    def colswitcher(lst):
+        print("Column Switcher function run")
+        for column in range(1, 7):
+            # idx += 1
+            # copypaster takes in a string value at x, number at y
+            print(f"Switched to index number {column} - {lst[column]}")
+            copypaster(lst[column], column)
+
+    # switch to next sheet and file
+    # keep this off for first real test to insure memory saftey
     def fileswitcher():
+        print("Switching to Next Sheet")
         sheet_num = 1
-        for files in range(0,1):
+        for files in range(0, 1):
             ws_template = wb_template["Sheet" + str(sheet_num)]
- 
-    #starting places inputed into functions
-    copypaster("A")
-    colswitcher(1, "A")
-    # fileswitcher()
+
+    # starting places inputed into functions
+    colswitcher(col_list)
+    fileswitcher()
 
     # Saving the filled in Template as a new file
+    def end():
+        txt = input("Would you like to Save your Progress?: (Y/N)")
+        if txt == "Y" or "y":
+            return
+        else:
+            sys.exit()
+    # end()
+
+    # put this code inside the end() function
     wb_template.save('Outbox/Output.xlsx')
     print("File exported in /Outbox")
 
