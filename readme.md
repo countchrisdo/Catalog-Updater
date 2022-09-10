@@ -16,3 +16,7 @@ How to Use:
 ---
 
 Still a WIP I would not reccomend using this yet
+
+---
+
+Credit to openpyxl for the fantastic Excel and Python intergration
