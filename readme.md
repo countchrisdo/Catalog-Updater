@@ -6,12 +6,19 @@ Made to work with excel .xlsx files only
 
 --- 
 
-How to Use:
+# How to Use:
 
 1. Get your Template and folder and import it in main.py
 2. Put distributer catalogs inside **/Inbox** folder
 3. Run main.py
 4. Check **/Outbox** folder
+
+---
+
+# Todo
+
+<input type="checkbox" disabled checked /> Before scanning, you confirm if the files are correct
+<input type="checkbox" disabled /> Perhaps manually confirm which columns match up in terminal 
 
 ---
 
