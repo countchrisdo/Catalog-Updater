@@ -11,7 +11,7 @@ directory = 'Inbox'
 
 def main():
     # iterate over files in named directory
-    print("Checking Inbox Folder")
+    print("Checking Inbox Folder...")
     import_num = 0
     for filename in os.listdir(directory):
 
@@ -23,6 +23,9 @@ def main():
             import_num += 1
             print(f)
     print(f"You have imported: {import_num} files")
+
+    #inputs
+    input("Does this look correct?: (Y/N)")
 
     # Setting to the first template sheet
     ws_template = wb_template.active
@@ -37,17 +40,40 @@ def main():
         print(f"Initializing {new_sheet.title}")
 
     # Insert data to sheet1
-    # TODO convert to a for loop or something
-    ws_template['A6'].value = ws_data['A2'].value
-    row1 = ws_data['A2:A10']
-    print(row1)
+    print("Writing to sheet1...")
+    row_count = len(tuple(ws_data.rows))
 
-    # switch to sheet2
-    ws_template = wb_template["Sheet2"]
-    # import data from catalog B?
-    # insert data to sheet2
-    ws_template['A6'].value = "Test Value"
-    ws_template['A7'].value = "On Sheet2"
+    def copypaster(x):
+        # for cell in column X, print data, copy data, print again
+        for cell in range(2, row_count + 1):
+            data_cell = ws_data[x + str(cell)]
+            print(data_cell.value)
+            # +4 on the position of the new cell to get under the headers
+            new_cell = ws_template[x + str(cell + 4)]
+            new_cell.value = data_cell.value
+            print(new_cell.value)
+    # for each column in data sheet, run copypaster then switch column and run again
+    def colswitcher(num, str):
+        for column in range(0,2):
+            #increment character A, B, C... etc
+            num += 1
+            str = get_column_letter(num)
+            
+            if 1 == 1:
+                copypaster(str)
+            else:
+                colswitcher(str)
+   
+    # switch to next sheet2 and file
+    def fileswitcher():
+        sheet_num = 1
+        for files in range(0,1):
+            ws_template = wb_template["Sheet" + str(sheet_num)]
+ 
+    #starting places inputed into functions
+    copypaster("A")
+    colswitcher(1, "A")
+    # fileswitcher()
 
     # Saving the filled in Template as a new file
     wb_template.save('Outbox/Output.xlsx')
