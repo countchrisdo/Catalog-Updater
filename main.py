@@ -14,6 +14,8 @@ directory = 'Inbox'
 
 inbox_files = []
 
+#Note: You can iterate through a list with forloop automatically
+
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
     # checking if it is a file
@@ -104,19 +106,27 @@ def main():
     # Take in list and switch to each column as needed to read information
     def colswitcher(lst):
         print("Column Switcher function run")
-        # Switches 6 times exactly
-        # TODO make number of switches vary on array length
+        # Switches 6 times exactly starting at Number "1" AKA "A"
+        # should I make number of switches vary on array length?
         for column in range(1, 7):
-            # idx += 1
             # copypaster takes in a string value at x, number at y
             print(f"Switched to index number {column} - {lst[column]}")
             copypaster(lst[column], column)
     colswitcher(col_list)
 
     # switch to next sheet and file
-    ws_template.active = "Sheet2"
-    
-    wb_data = inbox_files[1]
+
+    #for each file in the inbox_files list
+    #-1 from length because the ocde has already run once by default
+    idx = 0
+    for file in range(0,len(inbox_files)-1):
+        idx += 1
+        print(idx)
+        ws_template = wb_template["Sheet" + str(idx + 1)]
+        print(f"Switched to {ws_template}")
+        wb_data = inbox_files[idx]
+        print(f"Switched to file {inbox_files[idx]}")
+        colswitcher(col_list)
 
     # Saving the filled in Template as a new file
 
