@@ -5,13 +5,39 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter, column_index_from_string
 from openpyxl.styles import Font
 
+#TODO Move a bunch of these functions to another file to clean up main.py
 # Importing Spreadsheets
 wb_template = load_workbook('Dummy Template.xlsx')
-wb_data = load_workbook('Inbox/Dummy_File_A.xlsx')
+#wb_data = load_workbook('Inbox/Dummy_FILE_A.xlsx')
+
 directory = 'Inbox'
 
+inbox_files = []
+
+for filename in os.listdir(directory):
+    f = os.path.join(directory, filename)
+    # checking if it is a file
+    if "~" in f:
+        print("Warning: File is open")
+    elif os.path.isfile(f):
+        print(f)
+        inbox_files.append(f)
+    else:
+        print("incorrect file found, or no files found. try again")
+
+wb_data = load_workbook(inbox_files[0])
+
+def start():
+    txt = input("Does this look correct?: (Y/N)")
+    if txt == "Y" or "y":
+        return
+    else:
+        sys.exit()
+# start()
 
 def main():
+    global wb_data
+
     import_num = 0
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
@@ -20,22 +46,13 @@ def main():
             print("Warning: File is open")
         elif os.path.isfile(f):
             import_num += 1
-            print(f)
-    print(f"You have imported: {import_num} files")
-
-    def start():
-        txt = input("Does this look correct?: (Y/N)")
-        if txt == "Y" or "y":
-            return
-        else:
-            sys.exit()
-    # start()
+    print(f"You have: {import_num} files available")
 
     ws_template = wb_template.active
     ws_data = wb_data.active
 
     # Copying sheets to match import number
-    for file_index in range(1, import_num + 1):
+    for file_index in range(1, import_num):
         new_sheet = wb_template.copy_worksheet(ws_template)
         new_sheet.title = f"Sheet{file_index + 1}"
         print(f"Initializing {new_sheet.title}")
@@ -45,7 +62,7 @@ def main():
     # Asking user for the columns to use
     col_list = [0]
     def dialog(lst):
-        #Maybe change to list what each input is for / Cost / Id / ect
+        # Maybe change to list what each input is for / Cost / Id / ect
         # print("Input the Letter of the Columns you want scraped")
         # print("Please enter one at a time:")
         # print("Enter a zero to leave it blank:")
@@ -63,7 +80,7 @@ def main():
         print("Copypaster function run")
         if x == "0":
             print("Leaving Field Blank")
-            
+
         else:
             # for cell in data sheet's column X, print data, copy data, print again
             # y += 1
@@ -87,25 +104,22 @@ def main():
     # Take in list and switch to each column as needed to read information
     def colswitcher(lst):
         print("Column Switcher function run")
+        # Switches 6 times exactly
+        # TODO make number of switches vary on array length
         for column in range(1, 7):
             # idx += 1
             # copypaster takes in a string value at x, number at y
             print(f"Switched to index number {column} - {lst[column]}")
             copypaster(lst[column], column)
+    colswitcher(col_list)
 
     # switch to next sheet and file
-    # keep this off for first real test to insure memory saftey
-    def fileswitcher():
-        print("Switching to Next Sheet")
-        sheet_num = 1
-        for files in range(0, 1):
-            ws_template = wb_template["Sheet" + str(sheet_num)]
-
-    # starting places inputed into functions
-    colswitcher(col_list)
-    fileswitcher()
+    ws_template.active = "Sheet2"
+    
+    wb_data = inbox_files[1]
 
     # Saving the filled in Template as a new file
+
     def end():
         txt = input("Would you like to Save your Progress?: (Y/N)")
         if txt == "Y" or "y":
