@@ -1,5 +1,6 @@
 import os
 import sys
+from termcolor import colored, cprint
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter, column_index_from_string
 import time
@@ -81,15 +82,6 @@ def main():
                 new_cell.value = data_cell.value
                 #print(new_cell.value)
 
-    def old_colswitcher(num, str):
-        # for each column in data sheet, run copypaster then switch column and run again
-        for column in range(0, 5):
-            # increment character A, B, C... etc
-            num += 1
-            str = get_column_letter(num)
-
-            copypaster(str)
-
     # Take in list and switch to each column as needed to read information
     def colswitcher(lst):
         print("Column Switcher run")
@@ -108,15 +100,17 @@ def main():
     idx = 0
     for file in range(0, len(inbox_files)-1):
         idx += 1
-        print(idx)
+        print(f"Current Idx is: {idx}")
+        print("The isx should be 0 first, then 1 after")
         ws_template = wb_template["Sheet" + str(idx + 1)]
         print(f"Switched to {ws_template}")
-        wb_data = inbox_files[idx]
+        wb_data = load_workbook(inbox_files[idx])
+        ws_data = wb_data.active
         print(f"Switched to file {inbox_files[idx]}")
         colswitcher(col_list)
 
+    #testing is wb_data is actually changing value
     # Saving the filled in Template as a new file
-
     def end():
         txt = input("Would you like to Save your Progress?: (Y/N)")
         if txt == "Y" or "y":
@@ -127,11 +121,11 @@ def main():
 
     # put this code inside the end() function
     wb_template.save('Outbox/Output.xlsx')
-    print("File exported in /Outbox")
+    print(colored("File exported in:", "cyan"), colored("/Outbox","white"))
     
     
     end = time.time()
-    print(f"Total runtime: {end - begin} seconds")
+    print(colored("Total runtime:", "cyan"), colored(f"{end - begin} seconds", "white"))
  
 if __name__ == "__main__":
     main()

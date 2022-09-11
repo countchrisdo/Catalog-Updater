@@ -1,13 +1,16 @@
-# creating an empty list
-lst = []
+import sys
 
-# number of elements as input
-n = int(input("Enter number of elements : "))
+from termcolor import colored, cprint
 
-# iterating till the range
-for i in range(0, n):
-	ele = int(input())
+text = colored("Hello, World!", "red", attrs=["reverse", "blink"])
+print(text)
+cprint("Hello, World!", "green", "on_red")
 
-	lst.append(ele) # adding the element
-	
-print(lst)
+print_red_on_cyan = lambda x: cprint(x, "red", "on_cyan")
+print_red_on_cyan("Hello, World!")
+print_red_on_cyan("Hello, Universe!")
+
+for i in range(10):
+    cprint(i, "magenta", end=" ")
+
+cprint("Attention!", "red", attrs=["bold"], file=sys.stderr)
