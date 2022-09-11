@@ -18,28 +18,23 @@ for filename in os.listdir(directory):
     if "~" in f:
         print("Warning: File is open")
     elif os.path.isfile(f):
-        print(f)
+        #Adding files to inbox_files list
         inbox_files.append(f)
     else:
         print("incorrect file found, or no files found. try again")
 wb_data = load_workbook(inbox_files[0])
 
-def start():
-    txt = input("Does this look correct?: (Y/N)")
-    if txt == "Y" or "y":
-        return
-    else:
-        sys.exit()
-# start()
 
 def main():
     global wb_data
 
-    print(f"You have: {len(inbox_files)} files available")
+    print("Catalog Updater Running")
+    print(colored("You have:", "cyan"), colored(f"{len(inbox_files)} files available"))
     print(inbox_files)
 
     ws_template = wb_template.active
     ws_data = wb_data.active
+    row_count = len(tuple(ws_data.rows))
 
     # Copying sheets to match import number
     for file_index in range(1, len(inbox_files)):
@@ -47,11 +42,7 @@ def main():
         new_sheet.title = f"Sheet{file_index + 1}"
         print(f"Initializing {new_sheet.title}")
 
-    row_count = len(tuple(ws_data.rows))
-
-    # Asking user for the columns to use
     col_list = [0]
-
     def dialog(lst):
         # Maybe change to list what each input is for / Cost / Id / ect
         # print("Input the Letter of the Columns you want scraped")
@@ -61,7 +52,8 @@ def main():
         #     txt = input("-")
         #     lst.append(txt)
         #     print(txt)
-        # dummy info for the lift
+        
+        # Manually entering the list in the code for ease of use right now
         lst = ["0", "A", "0", "O", "0", "P", "Q"]
         print(f"Selected Columns:{lst}")
         return (lst)
@@ -70,17 +62,14 @@ def main():
     def copypaster(x, y):
         print("Copypaster run")
         if x == "0":
-            print("Leaving Field Blank")
+            print("Leaving Column Blank")
         else:
-            # for cell in data sheet's column X, print data, copy data, print again
-            # y += 1
+            # for each cell in data sheet's column X, copy data and paste it in template cell
             for cell in range(2, row_count + 1):
                 data_cell = ws_data[x + str(cell)]
-                # print(data_cell.value)
                 # +4 on the position of the new cell to get under the headers
                 new_cell = ws_template[get_column_letter(y) + str(cell + 4)]
                 new_cell.value = data_cell.value
-                #print(new_cell.value)
 
     # Take in list and switch to each column as needed to read information
     def colswitcher(lst):
@@ -88,28 +77,23 @@ def main():
         # Switches 6 times exactly starting at Number "1" AKA "A"
         # should I make number of switches vary on array length?
         for column in range(1, 7):
-            # copypaster takes in a string value at x, number at y
             print(f"Switched to index number {column} - {lst[column]}")
+            # copypaster takes in a string value at x, number at y
             copypaster(lst[column], column)
     colswitcher(col_list)
 
-    # switch to next sheet and file
-
-    # for each file in the inbox_files list
-    # -1 from length because the ocde has already run once by default
+    # switching to next sheet and file
+    # -1 from length because colswitcher has already run once by default
     idx = 0
     for file in range(0, len(inbox_files)-1):
         idx += 1
-        print(f"Current Idx is: {idx}")
-        print("The isx should be 0 first, then 1 after")
         ws_template = wb_template["Sheet" + str(idx + 1)]
-        print(f"Switched to {ws_template}")
+        print(f"Writing to {ws_template}")
         wb_data = load_workbook(inbox_files[idx])
         ws_data = wb_data.active
-        print(f"Switched to file {inbox_files[idx]}")
+        print(f"Scanning file {inbox_files[idx]}")
         colswitcher(col_list)
 
-    #testing is wb_data is actually changing value
     # Saving the filled in Template as a new file
     def end():
         txt = input("Would you like to Save your Progress?: (Y/N)")
@@ -119,13 +103,14 @@ def main():
             sys.exit()
     # end()
 
-    # put this code inside the end() function
+    # put this code inside the end() function at some point
     wb_template.save('Outbox/Output.xlsx')
-    print(colored("File exported in:", "cyan"), colored("/Outbox","white"))
-    
-    
+    print(colored("File exported in:", "cyan"), colored("/Outbox", "white"))
+
     end = time.time()
-    print(colored("Total runtime:", "cyan"), colored(f"{end - begin} seconds", "white"))
- 
+    print(colored("Total runtime:", "cyan"),
+          colored(f"{end - begin} seconds", "white"))
+
+
 if __name__ == "__main__":
     main()
