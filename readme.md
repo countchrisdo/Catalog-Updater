@@ -10,19 +10,16 @@ Made to work with excel .xlsx files only
 
 1. Get your Template and folder and import it in main.py
 2. Put distributer catalogs inside **/Inbox** folder
-3. Run main.py
-4. Check **/Outbox** folder
+3. Inside the function *dialog* there is a list called lst[] where you can enter the 5 column letters of the original price files you want to copy to the template file
+4. Run main.py
+5. Check **/Outbox** folder
 
 ---
 
 # Todo
 
-<input type="checkbox" disabled checked /> Before scanning, you confirm if the files are correct
+<input type="checkbox" disabled checked /> Before running, display imported files
 <input type="checkbox" disabled /> Perhaps manually confirm which columns match up in terminal 
-
----
-
-Still a WIP I would not reccomend using this yet
 
 ---
 
