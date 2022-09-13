@@ -18,9 +18,10 @@ Made to work with excel .xlsx files only
 
 # Todo
 
-<input type="checkbox" disabled checked /> Before running, display imported files
-<input type="checkbox" disabled /> Perhaps manually confirm which columns match up in terminal 
+- ~~Before running, display imported files~~
+- ~~Add Color to print statements for readability in Terminal~~
+- Perhaps manually confirm which columns match up in Terminal 
 
 ---
 
-Credit to openpyxl for the fantastic Excel and Python intergration
+Credit to *Openpyxl* for the fantastic Excel + Python intergration
