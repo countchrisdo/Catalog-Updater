@@ -1,8 +1,10 @@
 # CatalogUpdater.py
 
-A python script I'm developing to aid in transferring the important information from a distrubuter's **Catalog** to a Seller's **Cost Price Files** and **Resale Price Files**
+A python script developed to aid in transferring the important information from a distrubuter's **Catalog** to a Seller's **Cost Price Files** and **Resale Price Files**
 
 Made to work with excel .xlsx files only
+
+This was created to work for my own job but it's published for anyone to take a look at and use. I can't know if it will be useful for many people but I do believe this code can be edited fairy easily to do a lot of different CopyPasting tasks in excel with multiple columsn and pages.
 
 --- 
 
