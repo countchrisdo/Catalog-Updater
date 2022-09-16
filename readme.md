@@ -1,4 +1,4 @@
-# CatalogUpdater.py
+Catalog Updater
 
 A python script developed to aid in transferring the important information from a distrubuter's **Catalog** to a Seller's **Cost Price Files** and **Resale Price Files**
 
