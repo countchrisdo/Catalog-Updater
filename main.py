@@ -7,7 +7,7 @@ import time
 
 # TODO Move a bunch of these functions to another file to clean up main.py
 
-wb_template = load_workbook('Dummy Template.xlsx')
+wb_template = load_workbook('Template.xlsx')
 directory = 'Inbox'
 begin = time.time()
 
