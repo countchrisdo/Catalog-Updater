@@ -1,0 +1,6 @@
+# This is a comment. Anything after a "#" symbol is ignored.
+
+
+# Ignore the "build" folder and all of its contents
+Inbox/
+Outbox/
