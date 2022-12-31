@@ -6,7 +6,7 @@ from openpyxl.utils import get_column_letter, column_index_from_string
 import time
 
 # TODO Move a bunch of these functions to another file to clean up main.py
-
+print("Program Starting")
 wb_template = load_workbook('Template.xlsx')
 directory = 'Inbox'
 begin = time.time()
