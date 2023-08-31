@@ -24,7 +24,6 @@ for filename in os.listdir(directory):
         print("incorrect file found, or no files found. try again")
 wb_data = load_workbook(inbox_files[0])
 
-
 def main():
     global wb_data
 
