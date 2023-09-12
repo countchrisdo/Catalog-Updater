@@ -5,7 +5,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter, column_index_from_string
 import time
 
-# TODO Move a bunch of these functions to another file to clean up main.py
+# TODO: Move a bunch of these functions to another file to clean up main.py
 print("Program Starting")
 wb_template = load_workbook('Template.xlsx')
 directory = 'Inbox'
@@ -43,7 +43,9 @@ def main():
 
     col_list = [0]
     def dialog(lst):
-        # Maybe change to list what each input is for / Cost / Id / ect
+        # Idea: change to list what each input is for / Cost / Id / ect
+
+        # This commented out section is for user input of columns
         # print("Input the Letter of the Columns you want scraped")
         # print("Please enter one at a time:")
         # print("Enter a zero to leave it blank:")
@@ -52,7 +54,7 @@ def main():
         #     lst.append(txt)
         #     print(txt)
         
-        # Manually entering the list in the code for ease of use right now
+        # Hardcoding the list of Columns in the code for ease of use right now
         lst = ["0", "A", "0", "O", "0", "P", "Q"]
         print(f"Selected Columns:{lst}")
         return (lst)
@@ -74,7 +76,7 @@ def main():
     def colswitcher(lst):
         print("Column Switcher run")
         # Switches 6 times exactly starting at Number "1" AKA "A"
-        # should I make number of switches vary on array length?
+        # IDEA: make number of switches vary on array length?
         for column in range(1, 7):
             print(f"Switched to index number {column} - {lst[column]}")
             # copypaster takes in a string value at x, number at y
@@ -102,7 +104,7 @@ def main():
             sys.exit()
     # end()
 
-    # put this code inside the end() function at some point
+    # TODO put this code inside the end() function
     wb_template.save('Outbox/Output.xlsx')
     print(colored("File exported in:", "cyan"), colored("/Outbox", "white"))
 
