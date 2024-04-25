@@ -14,15 +14,17 @@ begin = time.time()
 inbox_files = []
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
-    # checking if it is a file
+    # checking if it is a file and not a .txt file
     if "~" in f:
         print("Warning: File is open")
-    elif os.path.isfile(f):
-        #Adding files to inbox_files list
+    elif os.path.isfile(f) and not f.endswith('.txt'):
+        # Adding files to inbox_files list
         inbox_files.append(f)
-    else:
-        print("incorrect file found, or no files found. try again")
-wb_data = load_workbook(inbox_files[0])
+
+if inbox_files:
+    wb_data = load_workbook(inbox_files[0])
+else:
+    print("No valid files found in the directory.")
 
 def main():
     global wb_data
