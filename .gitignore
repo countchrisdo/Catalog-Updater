@@ -1,2 +1,4 @@
 # Ignore all files and folders that end with ".xlsx"
 *.xlsx
+#Ignore all files and folders that end with ".DS_Store"
+*.ds_store
