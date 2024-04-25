@@ -7,21 +7,34 @@ import time
 
 # TODO: Move a bunch of these functions to another file to clean up main.py
 print("Program Starting")
-wb_template = load_workbook('Template.xlsx')
-directory = 'Inbox'
 begin = time.time()
 
+# Check for "Template.xlsx" and "Template.xlsm" files
+template_files = ["Template.xlsx", "Template.xlsm"]
+found_template = None
+for filename in template_files:
+    if os.path.isfile(filename):
+        found_template = filename
+        print(f"Found template file: {found_template}")
+        break
+
+# If a template file is found, load it
+if found_template:
+    print(f"Loading {found_template} into memory.")
+    wb_template = load_workbook(found_template)
+else:
+    print("No template file found.")
+
+#Move from Root to Inbox folder
+directory = 'Inbox'
 inbox_files = []
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
-    # checking if it is a file and not a .txt file
-    if "~" in f:
-        print("Warning: File is open")
-    elif os.path.isfile(f) and not f.endswith('.txt'):
-        # Adding files to inbox_files list
+    # checking if it is a xls (xlsx, xlsm) file
+    if "xls" in f:
         inbox_files.append(f)
-
 if inbox_files:
+    # Load the first file in the inbox_files list at index [0]
     wb_data = load_workbook(inbox_files[0])
 else:
     print("No valid files found in the directory.")
@@ -98,6 +111,7 @@ def main():
         colswitcher(col_list)
 
     # Saving the filled in Template as a new file
+    #End function is not called currently
     def end():
         txt = input("Would you like to Save your Progress?: (Y/N)")
         if txt == "Y" or "y":
@@ -112,7 +126,7 @@ def main():
 
     end = time.time()
     print(colored("Total runtime:", "cyan"),
-          colored(f"{end - begin} seconds", "white"))
+        colored(f"{end - begin} seconds", "white"))
 
 
 if __name__ == "__main__":

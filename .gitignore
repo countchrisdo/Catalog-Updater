@@ -1,4 +1,5 @@
-# Ignore all files and folders that end with ".xlsx"
+# Ignore all files and folders that end with ".xlsx" to protect my privacy
+#leaving other formats alone (e.g. .xlsm) so I can share templates
 *.xlsx
 #Ignore all files and folders that end with ".DS_Store"
 *.ds_store
