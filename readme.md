@@ -1,4 +1,4 @@
-# Catalog Updater - The CLI Data Copy and Merge Tool
+# Catalog Updater ✨- The CLI Data Copy and Merge Tool
 
 ![Python Version](https://img.shields.io/badge/python-3.6%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -7,7 +7,7 @@
 
 The CLI Data Copy and Merge Tool is a command-line interface (CLI) program written in Python. Initially designed to copy millions of products from a distrubuter's **Catalog** to a Seller's **Cost Price Files** and **Resale Price Files**. This tool allows you to copy data from specific columns in multiple different files and paste them into one large template file. This was created for my own specific use at work but it's published for anyone to use because this code can be edited fairy easily to do a lot of different Copy-Pasting tasks in Microsoft Excel. It's especially useful when you have structured data in multiple source files that need to be consolidated into a single template. 
 
-## Features
+## Features ✨✨
 
 - Copy data from specific columns in multiple files.
 - Merge the copied data into a single template file.
@@ -64,7 +64,7 @@ If you have any questions or suggestions, feel free to contact me at [crburwell@
 
 Happy data merging!
 
-# Todo
+# Todo ✨
 
 - ~~Before running, display imported files~~
 - ~~Add Color to print statements for readability in Terminal~~
