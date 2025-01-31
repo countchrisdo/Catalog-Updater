@@ -10,8 +10,13 @@ template_files = ["Template.xlsx", "Template.xlsm"]
 OUTPUT_PATH = "Outbox/Output.xlsx"
 
 # Columns to extract from source files and their target columns in the template
-# Format: Each item in the list represents a column in the template. Input a 0 for a column you want to skip and input the letter of the column you want to extract from the source file. The first index of the list should always be 0.
-COLUMN_MAPPING = ["0", "A", "0", "O", "0", "P", "Q"]
+# Format: Each item in the list represents a column in the template.
+# Input a 0 for a column you want to skip
+# input the letter of the column you want to extract from the source file.
+COLUMN_MAPPING = ["A", "0", "O", "0", "P", "Q"]
+
+# Number of headers in template to skip
+HEADERS = 4
 
 # TODO Chunk size
 # CHUNKSIZE = 5000
