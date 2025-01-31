@@ -38,15 +38,17 @@ pip install -r requirements.txt
 
 ## Usage
 
-To use the CLI Data Copy and Merge Tool, follow these steps:
+To use the CLI Column Copy and Merge Tool, follow these steps:
 
 1. Prepare your source data files in the **Inbox** folder, and ensure that they have a consistent format (e.g., CSV, Excel).
 
-2. Create a template file with placeholders where you want to insert the copied data. Name the file "Template" or change the name in main.py line 10.
+2. Create a template file with placeholders where you want to insert the copied data. Name the file "Template" or change the name in config.py.
 
-3. You can enter the 5 letters of your desired columns inside the *dialog*'s function **lst[]** 
+3. You can enter the Columns you wish to bring over from the data files to the template file in **config.py**. The columns are defined by the header row in the template file. The first column is A, the second column is B, and so on. 
 
-5. Run the CLI tool, review the terminal output to ensure the files were imported correctly, and then press **Enter** to continue.
+    3a. You can also define the row you want to start copying from in **config.py**. The default is 4, which means it will start copying from the second row of the source files.
+
+5. Run the CLI tool, review the terminal output to ensure the files were imported correctly and the rest will be done automatically. 
 
 6. The tool will copy data from the specified columns in your source files, merge it into the template, and save the result in the **Output** folder.
 

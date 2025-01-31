@@ -4,7 +4,7 @@ import time
 from termcolor import colored #cprint
 from openpyxl import load_workbook #Workbook
 from openpyxl.utils import get_column_letter #column_index_from_string
-from config import INPUT_DIR, template_files, OUTPUT_PATH, COLUMN_MAPPING, HEADERS
+from config import INPUT_DIR, template_files, OUTPUT_PATH, COLUMN_MAPPING, THEADERS, DHEADERS
 
 def init():
     """ Initialize the program and load the template file."""
@@ -72,10 +72,10 @@ def main(wb_data, inbox_files, wb_template, timer):
         else:
             print("Copypaster running")
             # for each cell in data sheet's column X, copy data and paste it in template cell
-            for cell in range(2, row_count + 1):
+            for cell in range(DHEADERS+1, row_count + 1):
                 data_cell = ws_data[x + str(cell)]
                 # +4 on the position of the new cell to get under the headers
-                new_cell = ws_template[get_column_letter(y) + str(cell + HEADERS)]
+                new_cell = ws_template[get_column_letter(y) + str(cell + THEADERS - 1)]
                 new_cell.value = data_cell.value
 
     # Take in list and switch to each column as needed to read information

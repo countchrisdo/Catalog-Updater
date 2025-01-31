@@ -16,7 +16,9 @@ OUTPUT_PATH = "Outbox/Output.xlsx"
 COLUMN_MAPPING = ["A", "0", "O", "0", "P", "Q"]
 
 # Number of headers in template to skip
-HEADERS = 4
+THEADERS = 5
+# Number of headers in data to skip
+DHEADERS = 1
 
 # TODO Chunk size
 # CHUNKSIZE = 5000
