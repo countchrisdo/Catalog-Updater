@@ -1,3 +1,4 @@
+"""Catalog Updater - main.py"""
 import os
 import sys
 from termcolor import colored, cprint
@@ -5,12 +6,14 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter, column_index_from_string
 import time
 
-# TODO: Move a bunch of these functions to another file to clean up main.py
+# Import Config settings
+from config import INPUT_DIR, template_files, OUTPUT_PATH, COLUMN_MAPPING
+
 print("Program Starting")
 begin = time.time()
 
 # Check for "Template.xlsx" and "Template.xlsm" files
-template_files = ["Template.xlsx", "Template.xlsm"]
+#TODO maybe remove this function and make the template a file you can select in config by name
 found_template = None
 for filename in template_files:
     if os.path.isfile(filename):
@@ -26,10 +29,9 @@ else:
     print("No template file found.")
 
 #Move from Root to Inbox folder
-directory = 'Inbox'
 inbox_files = []
-for filename in os.listdir(directory):
-    f = os.path.join(directory, filename)
+for filename in os.listdir(INPUT_DIR):
+    f = os.path.join(INPUT_DIR, filename)
     # checking if it is a xls (xlsx, xlsm) file
     if "xls" in f:
         inbox_files.append(f)
@@ -58,21 +60,10 @@ def main():
 
     col_list = [0]
     def dialog(lst):
-        # Idea: change to list what each input is for / Cost / Id / ect
-
-        # This commented out section is for user input of columns
-        # print("Input the Letter of the Columns you want scraped")
-        # print("Please enter one at a time:")
-        # print("Enter a zero to leave it blank:")
-        # for x in range(0,6):
-        #     txt = input("-")
-        #     lst.append(txt)
-        #     print(txt)
-        
-        # Hardcoding the list of Columns in the code for ease of use right now
-        lst = ["0", "A", "0", "O", "0", "P", "Q"]
+        # This function used to be a dialog box but it's now just a list in config
+        lst = COLUMN_MAPPING
         print(f"Selected Columns:{lst}")
-        return (lst)
+        return(lst)
     col_list = dialog(col_list)
 
     def copypaster(x, y):
@@ -91,7 +82,7 @@ def main():
     def colswitcher(lst):
         print("Column Switcher run")
         # Switches 6 times exactly starting at Number "1" AKA "A"
-        # IDEA: make number of switches vary on array length?
+        # TODO: make number of switches vary on array length?
         for column in range(1, 7):
             print(f"Switched to index number {column} - {lst[column]}")
             # copypaster takes in a string value at x, number at y
@@ -110,24 +101,14 @@ def main():
         print(f"Scanning file {inbox_files[idx]}")
         colswitcher(col_list)
 
-    # Saving the filled in Template as a new file
-    #End function is not called currently
     def end():
-        txt = input("Would you like to Save your Progress?: (Y/N)")
-        if txt == "Y" or "y":
-            return
-        else:
-            sys.exit()
-    # end()
+        wb_template.save(OUTPUT_PATH)
+        print(colored("File exported in:", "cyan"), colored("/Outbox", "white"))
 
-    # TODO put this code inside the end() function
-    wb_template.save('Outbox/Output.xlsx')
-    print(colored("File exported in:", "cyan"), colored("/Outbox", "white"))
-
-    end = time.time()
-    print(colored("Total runtime:", "cyan"),
-        colored(f"{end - begin} seconds", "white"))
-
+        runtime = time.time()
+        print(colored("Total runtime:", "cyan"),
+            colored(f"{runtime - begin} seconds", "white"))
+    end()
 
 if __name__ == "__main__":
     main()
